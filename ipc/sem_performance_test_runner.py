@@ -1,3 +1,11 @@
+"""
+This module is used for running semaphore performance test on operating system Linux with Medusa DS9 integration.
+Runs code with parameters and monitors approximate CPU usage with execution time.
+
+Should be placed in the same directory as compiled sem_test when executed.
+"""
+
+
 import subprocess
 import psutil
 import time
@@ -5,6 +13,15 @@ import os
 
 
 def calculate_cpu_usage(usage):
+    """
+    Calculates cpu usage from usage matrix.
+    Please note that the calculation is approximate and can be off from real values,
+    because it's not possible to gather exact information for process usage since psutils doesn't support usage statistics
+    for process running on multiple CPUs.
+
+    :param usage: cpu usage matrix, column represents cpu
+    :return: usage average
+    """
     num_cpu = len(usage[0])
 
     # Get sum for each CPU
@@ -20,6 +37,7 @@ def calculate_cpu_usage(usage):
     # Return avg for CPU
     return sum(col_summary)/num_cpu
 
+# Define argumetns for sem_test
 buffer_size = 50
 consumers = 125
 producers = 66
